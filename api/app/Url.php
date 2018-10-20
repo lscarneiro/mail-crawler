@@ -10,7 +10,4 @@ class Url extends Model
 
     protected $fillable = ['url', 'visited'];
 
-    protected $casts = [
-        'visited' => 'boolean',
-    ];
 }
