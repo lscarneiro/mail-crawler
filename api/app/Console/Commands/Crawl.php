@@ -86,7 +86,7 @@ class Crawl extends Command
                 try {
                     $response = $client->get($url);
                 } catch (ClientException $cliEx) {
-                    if ($cliEx->getCode() == 404) {
+                    if (in_array($cliEx->getCode(), [404, 403, 401, 500])) {
                         $urlObject->visited = 'yes';
                         $urlObject->save();
                         $urlObject = Url::where('visited', 'no')->first();
@@ -115,6 +115,7 @@ class Crawl extends Command
                 $emailCount = preg_match_all('/\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $body, $emails);
                 if ($emailCount > 0) {
                     foreach ($emails[0] as $email) {
+                        $email = html_entity_decode($email);
                         $this->saveEmail($email);
                     }
                 }
@@ -125,7 +126,7 @@ class Crawl extends Command
                             $this->saveLink($link);
                         } else if (in_array($link, ['"/', '/', 'javascript:void'])) {
                             continue;
-                        } else if (starts_with($link, ['javascript:void', '#', 'tel:'])) {
+                        } else if (starts_with($link, ['javascript:void', '#', 'tel:','mailto:'])) {
                             continue;
                         } else if (str_contains($link, ['http', 'https'])) {
                             $query = parse_url($link, PHP_URL_QUERY);
@@ -155,7 +156,7 @@ class Crawl extends Command
             } while ($urlObject != null);
 
         } catch (\Exception $ex) {
-            $this->error($ex);
+            $this->error($ex->getMessage());
         }
 
 
