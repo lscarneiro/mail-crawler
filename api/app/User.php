@@ -25,6 +25,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token','created_at', 'email_verified_at','updated_at'
     ];
+
+    public function rollApiKey()
+    {
+        do {
+            $this->api_token = str_random(60);
+        } while ($this->where('api_token', $this->api_token)->exists());
+        $this->save();
+    }
 }
