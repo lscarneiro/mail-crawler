@@ -15,7 +15,7 @@ class CreateBasicTables extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
+            $table->text('url');
             $table->enum('visited',['yes','no'])->default('no');
         });
         Schema::create('emails', function (Blueprint $table) {
