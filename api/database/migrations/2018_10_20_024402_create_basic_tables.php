@@ -14,12 +14,12 @@ class CreateBasicTables extends Migration
     public function up()
     {
         Schema::create('urls', function (Blueprint $table) {
-            $table->increments('int');
+            $table->increments('id');
             $table->string('url');
             $table->enum('visited',['yes','no'])->default('no');
         });
         Schema::create('emails', function (Blueprint $table) {
-            $table->increments('int');
+            $table->increments('id');
             $table->string('email');
         });
     }
