@@ -25,4 +25,7 @@ RUN php composer.phar dump-autoload --optimize \
 
 RUN php artisan optimize
 
-CMD ["php", "artisan", "crawl:now"]
+COPY start.console.sh /usr/src/myapp/
+RUN sleep 10s
+
+CMD sh start.console.sh
