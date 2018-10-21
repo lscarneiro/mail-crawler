@@ -19,6 +19,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY vhost.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN a2enmod rewrite
+RUN a2enmod headers
 RUN service apache2 restart
 
 COPY . /var/www/html

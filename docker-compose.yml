@@ -25,8 +25,21 @@ services:
     depends_on:
       - mysql_crawler
     networks:
-      - default
       - database
+      - default
+
+  app_crawler:
+    build:
+      context: ./front
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8003:80"
+    depends_on:
+      - mysql_crawler
+      - api_crawler
+    networks:
+      - default
 
   console_crawler:
     build:
