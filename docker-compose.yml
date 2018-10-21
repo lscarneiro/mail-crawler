@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+
+  mysql_crawler:
+    image: mysql:5.7
+    restart: always
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: audima
+      MYSQL_ROOT_PASSWORD: xXeVN3cuWmmZdxz3HA68UJ75G3VTpnKQ
+    volumes:
+      -  "db-data:/var/lib/mysql"
+    networks:
+      - database
+
+  api_crawler:
+    build:
+      context: ./api
+      dockerfile: ./docker/api/Dockerfile
+    restart: always
+    ports:
+      - "8002:80"
+    depends_on:
+      - mysql_crawler
+    networks:
+      - default
+      - database
+
+  console_crawler:
+    build:
+      context: ./api
+      dockerfile: ./docker/console/Dockerfile
+    restart: always
+    depends_on:
+      - mysql_crawler
+      - api_crawler
+    networks:
+      - database
+
+networks:
+  default:
+  database:
+
+volumes:
+  db-data:
