@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Últimos 10 emails encontrados (atualizado a cada 1s) <span *ngIf="refreshing">(Atualizando...)</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let email of emails">
+          <th scope="row">{{email}}</th>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
