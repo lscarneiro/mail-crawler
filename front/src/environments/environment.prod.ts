@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://api_crawler'
+  apiUrl: 'http://localhost:8002'
 };
